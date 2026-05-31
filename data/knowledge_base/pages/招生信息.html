@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/auth/zsdata/lqxx/favicon.ico><title>lqcx</title><script>IEVersion();
+      function IEVersion() {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        var isIE =
+          userAgent.indexOf("compatible") > -1 &&
+          userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器
+        var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+        var isIE11 =
+          userAgent.indexOf("Trident") > -1 &&
+          userAgent.indexOf("rv:11.0") > -1;
+        if (isIE) {
+          var IEReg = new RegExp("MSIE (\\d+\\.\\d+);");
+          // 正则表达式匹配浏览器的userAgent字符串中MSIE后的数字部分，，这一步不可省略！！！
+          IEReg.test(userAgent);
+          // 取正则表达式中第一个小括号里匹配到的值
+          var IEVersionNum = parseFloat(RegExp["$1"]);
+          if (IEVersionNum < 9) {
+            var str = "您的浏览器版本较低";
+            var str2 =
+              "推荐使用:<a href='https://www.baidu.com/s?ie=UTF-8&wd=%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8' target='_blank' style='color:blue;'>谷歌</a>," +
+              "<a href='https://www.baidu.com/s?ie=UTF-8&wd=%E7%81%AB%E7%8B%90%E6%B5%8F%E8%A7%88%E5%99%A8' target='_blank' style='color:blue;'>火狐</a>," +
+              "浏览器极速模式";
+            document.writeln(
+              "<pre style='text-align:center;color:#fff;background-color:#6684fd; height:100%;border:0;position:fixed;top:0;left:0;width:100%;z-index:1234'>" +
+                "<h2 style='padding-top:200px;margin:0'><strong>" +
+                str +
+                "<br/></strong></h2><h2>" +
+                str2 +
+                "</h2><h2 style='margin:0'><strong>如果您使用的是360浏览器,请切换到极速模式访问<br/></strong></h2></pre>"
+            );
+            document.execCommand("Stop");
+          }
+        } else if (isEdge) {
+          return "edge"; //edge
+        } else {
+          return -1; //不是ie浏览器
+        }
+      }</script><link href=/auth/zsdata/lqxx/css/lqcxjg.8bf5fbc3.css rel=prefetch><link href=/auth/zsdata/lqxx/js/lqcxjg.13a6cba5.js rel=prefetch><link href=/auth/zsdata/lqxx/css/app.670d2cb0.css rel=preload as=style><link href=/auth/zsdata/lqxx/css/chunk-vendors.0594aca9.css rel=preload as=style><link href=/auth/zsdata/lqxx/js/app.c9746a4c.js rel=preload as=script><link href=/auth/zsdata/lqxx/js/chunk-vendors.7541b806.js rel=preload as=script><link href=/auth/zsdata/lqxx/css/chunk-vendors.0594aca9.css rel=stylesheet><link href=/auth/zsdata/lqxx/css/app.670d2cb0.css rel=stylesheet></head><body><noscript><strong>We're sorry but lqcx doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script>// 可用
+      // console.log($("#app"))
+    //   $(function () {
+    //   移动端点击按钮
+    //   $("#nav_btn_box").click(function () {
+    //     $("#nav_btn_box .point").toggleClass("on");
+    //     $("#nav_btn_box").toggleClass("on");
+    //     $("#m_nav").toggleClass("act");
+    //     $(".nav_mask").fadeToggle();
+    //   });
+
+    //   $(".nav_mask").click(function () {
+    //     $("#nav_btn_box .point").removeClass("on");
+    //     $("#nav_btn_box").removeClass("on");
+    //     $(this).fadeToggle();
+    //     $(".nav_btn_box").removeClass("act");
+    //     $("#m_nav").removeClass("act");
+    //   });
+
+    //   二级菜单按钮
+    //   $("#m_nav .title i").click(function () {
+    //     var tt = $(this).parents(".title");
+    //     if ($(tt).hasClass("on")) {
+    //       $(tt).children(".list").slideUp(600); //展开
+    //       $(tt).removeClass("on");
+    //     } else {
+    //       $("#m_nav .title ").removeClass("on");
+    //       $("#m_nav .title .list").slideUp();
+    //       $(tt).children(".list").slideDown();
+    //       $(tt).toggleClass("on");
+    //     }
+    //   });
+    // });</script><script src=/auth/zsdata/lqxx/js/chunk-vendors.7541b806.js></script><script src=/auth/zsdata/lqxx/js/app.c9746a4c.js></script></body></html>

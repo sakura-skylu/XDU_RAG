@@ -45,20 +45,24 @@ class HashEmbeddingProvider:
 
 class OpenAICompatibleEmbeddingProvider:
     def __init__(self, settings: Settings) -> None:
-        if not settings.openai_api_key:
-            raise ValueError("OPENAI_API_KEY is required for API embeddings")
+        if not settings.openai_embedding_api_key:
+            raise ValueError("OPENAI_EMBEDDING_API_KEY or ZHIPU_API_KEY is required for API embeddings")
         self.settings = settings
 
     def embed(self, texts: list[str]) -> list[list[float]]:
         import requests
 
+        payload = {"model": self.settings.openai_embedding_model, "input": texts}
+        if self.settings.openai_embedding_dimensions is not None:
+            payload["dimensions"] = self.settings.openai_embedding_dimensions
+
         response = requests.post(
-            f"{self.settings.openai_base_url}/embeddings",
+            f"{self.settings.openai_embedding_base_url}/embeddings",
             headers={
-                "Authorization": f"Bearer {self.settings.openai_api_key}",
+                "Authorization": f"Bearer {self.settings.openai_embedding_api_key}",
                 "Content-Type": "application/json",
             },
-            json={"model": self.settings.openai_embedding_model, "input": texts},
+            json=payload,
             timeout=self.settings.request_timeout_seconds,
         )
         response.raise_for_status()
@@ -67,6 +71,6 @@ class OpenAICompatibleEmbeddingProvider:
 
 
 def build_embedding_provider(settings: Settings) -> EmbeddingProvider:
-    if settings.use_api_embeddings and settings.openai_api_key:
+    if settings.use_api_embeddings:
         return OpenAICompatibleEmbeddingProvider(settings)
     return HashEmbeddingProvider()

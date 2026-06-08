@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">学生问答顺序图</title>
+  <desc id="desc">展示学生从前端提问到 RAG 服务检索、生成回答、返回引用的过程</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f9fc; }
+      .title { font: 700 30px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #122033; }
+      .subtitle { font: 400 16px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #66758a; }
+      .head { fill: #ffffff; stroke: #c9d4e2; stroke-width: 2; }
+      .head-accent { fill: #eaf4ff; stroke: #3478c6; stroke-width: 2; }
+      .head-text { font: 600 16px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #172033; text-anchor: middle; dominant-baseline: middle; }
+      .life { stroke: #a9b8ca; stroke-width: 2; stroke-dasharray: 6 7; }
+      .msg { stroke: #334155; stroke-width: 2.2; fill: none; marker-end: url(#arrow); }
+      .ret { stroke: #64748b; stroke-width: 2; fill: none; stroke-dasharray: 7 5; marker-end: url(#arrowGray); }
+      .msg-text { font: 500 14px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #243244; }
+      .band { fill: #fff7e6; stroke: #d19a2a; stroke-width: 1.6; }
+      .band2 { fill: #effbf4; stroke: #2b8a57; stroke-width: 1.6; }
+      .band3 { fill: #fff0f0; stroke: #cf4c4c; stroke-width: 1.6; }
+      .band-text { font: 600 14px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #4a5568; }
+    </style>
+    <marker id="arrow" markerWidth="11" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="11" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="64" y="52">学生问答核心流程 - 顺序图</text>
+  <text class="subtitle" x="64" y="80">从自然语言提问到可信回答与官方引用展示</text>
+
+  <g>
+    <rect class="head-accent" x="44" y="116" width="130" height="52" rx="12"/>
+    <text class="head-text" x="109" y="142">学生用户</text>
+    <line class="life" x1="109" y1="168" x2="109" y2="660"/>
+
+    <rect class="head" x="222" y="116" width="150" height="52" rx="12"/>
+    <text class="head-text" x="297" y="142">Streamlit 前端</text>
+    <line class="life" x1="297" y1="168" x2="297" y2="660"/>
+
+    <rect class="head" x="426" y="116" width="132" height="52" rx="12"/>
+    <text class="head-text" x="492" y="142">FastAPI /ask</text>
+    <line class="life" x1="492" y1="168" x2="492" y2="660"/>
+
+    <rect class="head-accent" x="612" y="116" width="132" height="52" rx="12"/>
+    <text class="head-text" x="678" y="142">RagService</text>
+    <line class="life" x1="678" y1="168" x2="678" y2="660"/>
+
+    <rect class="head" x="798" y="116" width="132" height="52" rx="12"/>
+    <text class="head-text" x="864" y="142">VectorStore</text>
+    <line class="life" x1="864" y1="168" x2="864" y2="660"/>
+
+    <rect class="head" x="984" y="116" width="150" height="52" rx="12"/>
+    <text class="head-text" x="1059" y="142">Embedding</text>
+    <line class="life" x1="1059" y1="168" x2="1059" y2="660"/>
+
+    <rect class="head" x="1162" y="116" width="86" height="52" rx="12"/>
+    <text class="head-text" x="1205" y="142">Chat API</text>
+    <line class="life" x1="1205" y1="168" x2="1205" y2="660"/>
+  </g>
+
+  <path class="msg" d="M109 204 H292"/>
+  <text class="msg-text" x="128" y="196">输入问题、分类、来源数</text>
+  <path class="msg" d="M297 246 H487"/>
+  <text class="msg-text" x="316" y="238">POST /ask(question, category, top_k)</text>
+  <path class="msg" d="M492 288 H673"/>
+  <text class="msg-text" x="510" y="280">build_rag_service().ask()</text>
+  <path class="msg" d="M678 330 H859"/>
+  <text class="msg-text" x="692" y="322">search(question, provider, category)</text>
+  <path class="msg" d="M864 372 H1054"/>
+  <text class="msg-text" x="888" y="364">embed([question])</text>
+  <path class="ret" d="M1059 410 H869"/>
+  <text class="msg-text" x="914" y="402">query_vector</text>
+  <path class="ret" d="M864 452 H683"/>
+  <text class="msg-text" x="716" y="444">SearchHit 列表</text>
+
+  <rect class="band" x="570" y="474" width="215" height="42" rx="10"/>
+  <text class="band-text" x="590" y="501">证据筛选、降噪、生成 Citation</text>
+
+  <path class="msg" d="M678 548 H1200"/>
+  <text class="msg-text" x="716" y="540">可选：complete(question, evidence_hits)</text>
+  <path class="ret" d="M1205 590 H683"/>
+  <text class="msg-text" x="818" y="582">生成式回答 / 抽取式回答 / 拒答</text>
+  <path class="ret" d="M678 626 H497"/>
+  <text class="msg-text" x="524" y="618">Answer 对象</text>
+  <path class="ret" d="M492 650 H302"/>
+  <text class="msg-text" x="330" y="642">JSON 响应</text>
+  <path class="ret" d="M297 674 H114"/>
+  <text class="msg-text" x="135" y="666">展示答案与来源</text>
+
+  <rect class="band2" x="54" y="600" width="214" height="38" rx="10"/>
+  <text class="band-text" x="76" y="624">命中证据：返回答案 + 引用</text>
+  <rect class="band3" x="1016" y="600" width="202" height="38" rx="10"/>
+  <text class="band-text" x="1038" y="624">无可靠证据：明确拒答</text>
+</svg>

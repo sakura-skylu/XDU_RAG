@@ -1,0 +1,15 @@
+.git
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.npm-cache
+.env
+*.log
+data
+ppt_media_review
+rag_deck_review.pptx
+tempCodeRunnerFile.python
+test.py

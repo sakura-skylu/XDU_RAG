@@ -1,0 +1,34 @@
+flowchart LR
+    student["学生用户"]
+    admin["系统管理员/项目成员"]
+
+    subgraph system["西电官网数据 RAG 智能检索系统"]
+        ask(("自然语言问答"))
+        filter(("按资料分类筛选"))
+        citations(("查看官方来源引用"))
+        refusal(("无依据时拒答"))
+        stats(("查看知识库统计"))
+        crawl(("采集官方公开页面"))
+        ingest(("导入本地 HTML 原文"))
+        index(("构建/更新向量索引"))
+        config(("维护官网白名单与分类词"))
+    end
+
+    student --- ask
+    student --- filter
+    student --- citations
+    student --- refusal
+    student --- stats
+
+    admin --- crawl
+    admin --- ingest
+    admin --- index
+    admin --- config
+    admin --- stats
+
+    filter -. "<<extend>>" .-> ask
+    citations -. "<<include>>" .-> ask
+    refusal -. "<<extend>>" .-> ask
+    crawl -. "<<include>>" .-> config
+    ingest -. "<<alternative>>" .-> crawl
+    index -. "<<include>>" .-> ingest

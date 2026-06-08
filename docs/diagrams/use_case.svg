@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">西电官网数据 RAG 智能检索系统用例图</title>
+  <desc id="desc">展示学生用户和系统管理员与系统核心用例的关系</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f9fc; }
+      .panel { fill: #ffffff; stroke: #c9d4e2; stroke-width: 2; }
+      .title { font: 700 30px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #122033; }
+      .subtitle { font: 400 16px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #66758a; }
+      .actor { fill: #172033; stroke: #172033; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .actor-label { font: 600 20px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #172033; text-anchor: middle; }
+      .usecase { fill: #edf5ff; stroke: #3478c6; stroke-width: 2.5; }
+      .usecase-admin { fill: #f1fbf5; stroke: #2b8a57; stroke-width: 2.5; }
+      .usecase-text { font: 600 18px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #172033; text-anchor: middle; dominant-baseline: middle; }
+      .line { stroke: #5b6b7f; stroke-width: 2.5; fill: none; }
+      .dash { stroke: #7b8794; stroke-width: 2; fill: none; stroke-dasharray: 7 6; marker-end: url(#arrow); }
+      .note { font: 500 14px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #5f6f83; text-anchor: middle; }
+      .badge { fill: #e7edf5; stroke: #b8c6d8; stroke-width: 1.5; }
+      .badge-text { font: 600 15px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #3a495b; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#7b8794"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="64" y="56">西电官网数据 RAG 智能检索系统 - 用例图</text>
+  <text class="subtitle" x="64" y="84">面向学生查询与项目成员维护的核心交互范围</text>
+
+  <rect class="panel" x="286" y="112" width="738" height="520" rx="18"/>
+  <text class="subtitle" x="655" y="146" text-anchor="middle">系统边界</text>
+
+  <g transform="translate(126 246)">
+    <circle class="actor" cx="0" cy="0" r="18"/>
+    <path class="actor" d="M0 20 V94 M-46 48 H46 M0 94 L-42 152 M0 94 L42 152"/>
+    <text class="actor-label" x="0" y="194">学生用户</text>
+  </g>
+
+  <g transform="translate(1134 246)">
+    <circle class="actor" cx="0" cy="0" r="18"/>
+    <path class="actor" d="M0 20 V94 M-46 48 H46 M0 94 L-42 152 M0 94 L42 152"/>
+    <text class="actor-label" x="0" y="194">系统管理员</text>
+    <text class="actor-label" x="0" y="220">项目成员</text>
+  </g>
+
+  <ellipse class="usecase" cx="478" cy="214" rx="118" ry="44"/>
+  <text class="usecase-text" x="478" y="214">自然语言问答</text>
+  <ellipse class="usecase" cx="478" cy="318" rx="118" ry="44"/>
+  <text class="usecase-text" x="478" y="318">按分类筛选</text>
+  <ellipse class="usecase" cx="478" cy="422" rx="118" ry="44"/>
+  <text class="usecase-text" x="478" y="422">查看官方引用</text>
+  <ellipse class="usecase" cx="478" cy="526" rx="118" ry="44"/>
+  <text class="usecase-text" x="478" y="526">无依据拒答</text>
+
+  <ellipse class="usecase-admin" cx="820" cy="214" rx="128" ry="44"/>
+  <text class="usecase-text" x="820" y="214">采集公开页面</text>
+  <ellipse class="usecase-admin" cx="820" cy="318" rx="128" ry="44"/>
+  <text class="usecase-text" x="820" y="318">导入 HTML 原文</text>
+  <ellipse class="usecase-admin" cx="820" cy="422" rx="128" ry="44"/>
+  <text class="usecase-text" x="820" y="422">构建/更新索引</text>
+  <ellipse class="usecase-admin" cx="820" cy="526" rx="128" ry="44"/>
+  <text class="usecase-text" x="820" y="526">维护白名单分类</text>
+
+  <ellipse class="usecase" cx="650" cy="582" rx="116" ry="34"/>
+  <text class="usecase-text" x="650" y="582">查看知识库统计</text>
+
+  <path class="line" d="M174 286 L362 214"/>
+  <path class="line" d="M174 310 L360 318"/>
+  <path class="line" d="M174 334 L360 422"/>
+  <path class="line" d="M174 358 L372 526"/>
+  <path class="line" d="M174 384 L540 582"/>
+
+  <path class="line" d="M1086 286 L948 214"/>
+  <path class="line" d="M1086 310 L948 318"/>
+  <path class="line" d="M1086 334 L948 422"/>
+  <path class="line" d="M1086 358 L948 526"/>
+  <path class="line" d="M1086 384 L766 582"/>
+
+  <path class="dash" d="M494 274 C520 258 538 248 555 236"/>
+  <text class="note" x="550" y="258">&lt;&lt;extend&gt;&gt;</text>
+  <path class="dash" d="M530 389 C552 352 562 304 552 248"/>
+  <text class="note" x="590" y="337">&lt;&lt;include&gt;&gt;</text>
+  <path class="dash" d="M526 493 C568 420 578 322 556 244"/>
+  <text class="note" x="622" y="438">&lt;&lt;extend&gt;&gt;</text>
+  <path class="dash" d="M820 482 L820 570"/>
+  <text class="note" x="894" y="542">&lt;&lt;include&gt;&gt;</text>
+  <path class="dash" d="M820 274 L820 256"/>
+  <text class="note" x="902" y="280">&lt;&lt;include&gt;&gt;</text>
+
+  <rect class="badge" x="46" y="642" width="312" height="38" rx="19"/>
+  <text class="badge-text" x="70" y="666">蓝色：学生侧功能</text>
+  <rect class="badge" x="382" y="642" width="334" height="38" rx="19"/>
+  <text class="badge-text" x="406" y="666">绿色：维护侧功能</text>
+</svg>

@@ -1,0 +1,42 @@
+flowchart LR
+    subgraph client["展示与调用层"]
+        streamlit["Streamlit 问答前端"]
+        rest_client["API 客户端/命令行调用"]
+    end
+
+    subgraph api["接口层"]
+        fastapi["FastAPI\n/health /sources /stats /ask"]
+    end
+
+    subgraph core["核心业务层"]
+        pipeline["pipeline\n服务装配与索引流程"]
+        rag["RagService\n检索、证据筛选、拒答、回答生成"]
+        crawler["crawler\n抓取、解析、快照、去重"]
+        chunking["chunking\n文本切片"]
+        categorizer["categorizer\n分类与关键词得分"]
+    end
+
+    subgraph adapters["外部与存储适配层"]
+        embedding["EmbeddingProvider\nHash / API"]
+        chat["OpenAI-compatible Chat API"]
+        vector["VectorStore\nLocal JSON / Chroma"]
+        config["config/sources.json"]
+        data["data/\ndocuments chunks index raw pages"]
+    end
+
+    streamlit --> rag
+    rest_client --> fastapi
+    fastapi --> pipeline
+    fastapi --> rag
+    pipeline --> crawler
+    pipeline --> chunking
+    pipeline --> embedding
+    pipeline --> vector
+    crawler --> config
+    crawler --> data
+    chunking --> data
+    rag --> vector
+    rag --> embedding
+    rag --> categorizer
+    rag -. 可选 .-> chat
+    vector --> data

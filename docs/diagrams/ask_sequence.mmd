@@ -1,0 +1,31 @@
+sequenceDiagram
+    actor Student as 学生用户
+    participant UI as Streamlit 前端
+    participant API as FastAPI /ask
+    participant Service as RagService
+    participant Store as VectorStore
+    participant Embed as EmbeddingProvider
+    participant Chat as OpenAICompatibleChatClient
+
+    Student->>UI: 输入问题、选择分类和来源数
+    UI->>API: POST /ask(question, category, top_k)
+    API->>Service: build_rag_service().ask()
+    Service->>Store: search(question, provider, top_k, category)
+    Store->>Embed: embed([question])
+    Embed-->>Store: query_vector
+    Store-->>Service: SearchHit 列表
+    Service->>Service: 过滤低可信/噪声命中并生成 Citation
+
+    alt 命中可靠证据且启用 API Chat
+        Service->>Chat: complete(question, evidence_hits)
+        Chat-->>Service: 带引用编号的生成式回答
+        Service-->>API: Answer(mode="api")
+    else 命中可靠证据但未启用 API Chat
+        Service->>Service: _extractive_answer()
+        Service-->>API: Answer(mode="extractive")
+    else 未命中可靠证据
+        Service-->>API: Answer(mode="refusal", has_evidence=false)
+    end
+
+    API-->>UI: answer + citations + mode
+    UI-->>Student: 展示回答、来源链接和片段

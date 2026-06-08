@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">核心类图</title>
+  <desc id="desc">展示 RAG 系统核心数据模型、服务、爬虫、向量存储和模型接口类之间的关系</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f9fc; }
+      .title { font: 700 30px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #122033; }
+      .subtitle { font: 400 16px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #66758a; }
+      .box { fill: #ffffff; stroke: #c9d4e2; stroke-width: 2; }
+      .box-blue { fill: #eef6ff; stroke: #3478c6; stroke-width: 2; }
+      .box-green { fill: #f1fbf5; stroke: #2b8a57; stroke-width: 2; }
+      .box-orange { fill: #fff7e6; stroke: #d19a2a; stroke-width: 2; }
+      .class-name { font: 700 16px "Consolas", "Microsoft YaHei", Arial, sans-serif; fill: #122033; text-anchor: middle; }
+      .class-body { font: 500 13px "Consolas", "Microsoft YaHei", Arial, sans-serif; fill: #334155; }
+      .line { stroke: #4b5b6e; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #6b7787; stroke-width: 2; fill: none; stroke-dasharray: 7 5; marker-end: url(#arrowGray); }
+      .inherit { stroke: #475569; stroke-width: 2; fill: none; marker-end: url(#triangle); }
+      .rel { font: 600 12px "Microsoft YaHei", Arial, sans-serif; fill: #526273; }
+      .section { font: 700 14px "Microsoft YaHei", Arial, sans-serif; fill: #526273; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,5 L0,10 z" fill="#4b5b6e"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,5 L0,10 z" fill="#6b7787"/>
+    </marker>
+    <marker id="triangle" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 z" fill="#f7f9fc" stroke="#475569" stroke-width="1.8"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="64" y="52">核心模块关系 - 类图</text>
+  <text class="subtitle" x="64" y="80">突出数据模型、RAG 服务、爬虫、Embedding 与向量存储之间的依赖</text>
+
+  <text class="section" x="72" y="118">数据模型</text>
+  <g transform="translate(60 132)">
+    <rect class="box-blue" width="186" height="120" rx="8"/>
+    <text class="class-name" x="93" y="25">Document</text>
+    <line x1="0" y1="40" x2="186" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">doc_id, title, url</text>
+    <text class="class-body" x="14" y="82">category, content</text>
+    <text class="class-body" x="14" y="102">to_dict(), from_dict()</text>
+  </g>
+  <g transform="translate(60 278)">
+    <rect class="box-blue" width="186" height="120" rx="8"/>
+    <text class="class-name" x="93" y="25">Chunk</text>
+    <line x1="0" y1="40" x2="186" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">chunk_id, doc_id</text>
+    <text class="class-body" x="14" y="82">text, title, url</text>
+    <text class="class-body" x="14" y="102">category, publish_date</text>
+  </g>
+  <g transform="translate(60 424)">
+    <rect class="box-blue" width="186" height="88" rx="8"/>
+    <text class="class-name" x="93" y="25">SearchHit</text>
+    <line x1="0" y1="40" x2="186" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">chunk: Chunk</text>
+    <text class="class-body" x="14" y="78">score: float</text>
+  </g>
+  <g transform="translate(60 538)">
+    <rect class="box-blue" width="186" height="112" rx="8"/>
+    <text class="class-name" x="93" y="25">Answer / Citation</text>
+    <line x1="0" y1="40" x2="186" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">answer, citations</text>
+    <text class="class-body" x="14" y="82">has_evidence, mode</text>
+    <text class="class-body" x="14" y="102">source metadata</text>
+  </g>
+
+  <text class="section" x="368" y="118">业务服务</text>
+  <g transform="translate(330 150)">
+    <rect class="box-green" width="246" height="160" rx="8"/>
+    <text class="class-name" x="123" y="25">RagService</text>
+    <line x1="0" y1="40" x2="246" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">store, provider, settings</text>
+    <text class="class-body" x="14" y="84">ask(question, top_k, category)</text>
+    <text class="class-body" x="14" y="106">_ask_direct_api()</text>
+    <text class="class-body" x="14" y="128">_extractive_answer()</text>
+    <text class="class-body" x="14" y="150">returns Answer</text>
+  </g>
+  <g transform="translate(330 356)">
+    <rect class="box-orange" width="246" height="116" rx="8"/>
+    <text class="class-name" x="123" y="25">OpenAICompatibleChatClient</text>
+    <line x1="0" y1="40" x2="246" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="64">settings: Settings</text>
+    <text class="class-body" x="14" y="88">complete(question, hits)</text>
+  </g>
+  <g transform="translate(330 516)">
+    <rect class="box" width="246" height="100" rx="8"/>
+    <text class="class-name" x="123" y="25">Settings</text>
+    <line x1="0" y1="40" x2="246" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="64">API config, vector_store</text>
+    <text class="class-body" x="14" y="84">timeouts, feature flags</text>
+  </g>
+
+  <text class="section" x="704" y="118">采集与索引</text>
+  <g transform="translate(650 150)">
+    <rect class="box-green" width="224" height="134" rx="8"/>
+    <text class="class-name" x="112" y="25">WebCrawler</text>
+    <line x1="0" y1="40" x2="224" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">allowed_domains</text>
+    <text class="class-body" x="14" y="82">sources, category_keywords</text>
+    <text class="class-body" x="14" y="106">crawl(max_pages, max_depth)</text>
+  </g>
+  <g transform="translate(650 330)">
+    <rect class="box" width="224" height="108" rx="8"/>
+    <text class="class-name" x="112" y="25">EmbeddingProvider</text>
+    <line x1="0" y1="40" x2="224" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="64">&lt;&lt;interface&gt;&gt;</text>
+    <text class="class-body" x="14" y="84">embed(texts): vectors</text>
+  </g>
+  <g transform="translate(650 478)">
+    <rect class="box" width="224" height="126" rx="8"/>
+    <text class="class-name" x="112" y="25">Embedding 实现</text>
+    <line x1="0" y1="40" x2="224" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">HashEmbeddingProvider</text>
+    <text class="class-body" x="14" y="84">OpenAICompatible</text>
+    <text class="class-body" x="14" y="106">EmbeddingProvider</text>
+  </g>
+
+  <text class="section" x="1010" y="118">向量存储</text>
+  <g transform="translate(968 170)">
+    <rect class="box-orange" width="238" height="132" rx="8"/>
+    <text class="class-name" x="119" y="25">LocalVectorStore</text>
+    <line x1="0" y1="40" x2="238" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">chunks, vectors</text>
+    <text class="class-body" x="14" y="84">build(), save(), load()</text>
+    <text class="class-body" x="14" y="106">search(), stats()</text>
+  </g>
+  <g transform="translate(968 352)">
+    <rect class="box-orange" width="238" height="132" rx="8"/>
+    <text class="class-name" x="119" y="25">ChromaVectorStore</text>
+    <line x1="0" y1="40" x2="238" y2="40" stroke="#c9d4e2"/>
+    <text class="class-body" x="14" y="62">collection_name</text>
+    <text class="class-body" x="14" y="84">build(), load()</text>
+    <text class="class-body" x="14" y="106">search(), stats()</text>
+  </g>
+
+  <path class="line" d="M153 252 V278"/>
+  <text class="rel" x="166" y="270">split into</text>
+  <path class="line" d="M246 338 H330 V230"/>
+  <text class="rel" x="260" y="326">检索命中</text>
+  <path class="line" d="M246 588 H330 V260"/>
+  <text class="rel" x="260" y="570">returns</text>
+  <path class="dash" d="M576 230 H968"/>
+  <text class="rel" x="750" y="218">search</text>
+  <path class="dash" d="M576 258 H968 V418"/>
+  <text class="rel" x="748" y="280">optional</text>
+  <path class="line" d="M576 206 H650"/>
+  <text class="rel" x="594" y="196">settings</text>
+  <path class="line" d="M576 250 H650 V384"/>
+  <text class="rel" x="606" y="364">embed</text>
+  <path class="dash" d="M453 310 V356"/>
+  <text class="rel" x="462" y="338">可选生成</text>
+  <path class="line" d="M576 566 H650 V210"/>
+  <text class="rel" x="594" y="548">settings</text>
+  <path class="line" d="M874 210 H968"/>
+  <text class="rel" x="900" y="198">creates</text>
+  <path class="inherit" d="M762 478 V438"/>
+  <path class="line" d="M968 236 H874 V372"/>
+  <path class="line" d="M968 418 H874 V396"/>
+</svg>

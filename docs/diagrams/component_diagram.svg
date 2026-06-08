@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">系统组件图</title>
+  <desc id="desc">展示前端、接口层、核心业务层、外部适配与数据存储之间的组件关系</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f9fc; }
+      .title { font: 700 30px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #122033; }
+      .subtitle { font: 400 16px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #66758a; }
+      .lane { fill: #ffffff; stroke: #c9d4e2; stroke-width: 2; }
+      .lane-title { font: 700 18px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #3a495b; }
+      .comp { fill: #eef6ff; stroke: #3478c6; stroke-width: 2; }
+      .comp-green { fill: #f1fbf5; stroke: #2b8a57; stroke-width: 2; }
+      .comp-orange { fill: #fff7e6; stroke: #d19a2a; stroke-width: 2; }
+      .comp-gray { fill: #f2f5f9; stroke: #8a98aa; stroke-width: 2; }
+      .comp-title { font: 700 18px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #152033; text-anchor: middle; }
+      .comp-note { font: 500 14px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #526273; text-anchor: middle; }
+      .line { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #64748b; stroke-width: 2.2; fill: none; stroke-dasharray: 7 5; marker-end: url(#arrowGray); }
+      .label { font: 600 13px "Microsoft YaHei", Arial, sans-serif; fill: #526273; }
+    </style>
+    <marker id="arrow" markerWidth="11" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="11" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="64" y="52">系统组件图</text>
+  <text class="subtitle" x="64" y="80">展示前端、接口、核心业务、外部模型接口和本地数据之间的协作关系</text>
+
+  <rect class="lane" x="48" y="116" width="220" height="520" rx="18"/>
+  <text class="lane-title" x="76" y="150">展示与调用层</text>
+  <rect class="lane" x="306" y="116" width="196" height="520" rx="18"/>
+  <text class="lane-title" x="334" y="150">接口层</text>
+  <rect class="lane" x="540" y="116" width="330" height="520" rx="18"/>
+  <text class="lane-title" x="568" y="150">核心业务层</text>
+  <rect class="lane" x="908" y="116" width="324" height="520" rx="18"/>
+  <text class="lane-title" x="936" y="150">外部与存储适配层</text>
+
+  <g transform="translate(78 198)">
+    <rect class="comp" width="160" height="82" rx="12"/>
+    <text class="comp-title" x="80" y="32">Streamlit</text>
+    <text class="comp-note" x="80" y="58">问答前端</text>
+  </g>
+  <g transform="translate(78 374)">
+    <rect class="comp-gray" width="160" height="82" rx="12"/>
+    <text class="comp-title" x="80" y="32">CLI / API</text>
+    <text class="comp-note" x="80" y="58">命令行与客户端</text>
+  </g>
+
+  <g transform="translate(332 256)">
+    <rect class="comp" width="144" height="118" rx="12"/>
+    <text class="comp-title" x="72" y="32">FastAPI</text>
+    <text class="comp-note" x="72" y="60">/ask</text>
+    <text class="comp-note" x="72" y="82">/sources</text>
+    <text class="comp-note" x="72" y="104">/stats /health</text>
+  </g>
+
+  <g transform="translate(570 178)">
+    <rect class="comp-green" width="128" height="82" rx="12"/>
+    <text class="comp-title" x="64" y="32">pipeline</text>
+    <text class="comp-note" x="64" y="58">装配与索引</text>
+  </g>
+  <g transform="translate(722 178)">
+    <rect class="comp-green" width="118" height="82" rx="12"/>
+    <text class="comp-title" x="59" y="32">crawler</text>
+    <text class="comp-note" x="59" y="58">抓取解析</text>
+  </g>
+  <g transform="translate(570 318)">
+    <rect class="comp-green" width="128" height="82" rx="12"/>
+    <text class="comp-title" x="64" y="32">RagService</text>
+    <text class="comp-note" x="64" y="58">检索问答</text>
+  </g>
+  <g transform="translate(722 318)">
+    <rect class="comp-green" width="118" height="82" rx="12"/>
+    <text class="comp-title" x="59" y="32">chunking</text>
+    <text class="comp-note" x="59" y="58">文本切片</text>
+  </g>
+  <g transform="translate(646 468)">
+    <rect class="comp-green" width="148" height="82" rx="12"/>
+    <text class="comp-title" x="74" y="32">categorizer</text>
+    <text class="comp-note" x="74" y="58">分类与得分</text>
+  </g>
+
+  <g transform="translate(942 166)">
+    <rect class="comp-orange" width="244" height="80" rx="12"/>
+    <text class="comp-title" x="122" y="31">config/sources.json</text>
+    <text class="comp-note" x="122" y="57">白名单、种子站点、分类词</text>
+  </g>
+  <g transform="translate(942 286)">
+    <rect class="comp-orange" width="244" height="88" rx="12"/>
+    <text class="comp-title" x="122" y="31">VectorStore</text>
+    <text class="comp-note" x="122" y="58">Local JSON / Chroma</text>
+  </g>
+  <g transform="translate(942 414)">
+    <rect class="comp-orange" width="244" height="88" rx="12"/>
+    <text class="comp-title" x="122" y="31">EmbeddingProvider</text>
+    <text class="comp-note" x="122" y="58">Hash / API Embedding</text>
+  </g>
+  <g transform="translate(942 542)">
+    <rect class="comp-gray" width="244" height="70" rx="12"/>
+    <text class="comp-title" x="122" y="29">data/</text>
+    <text class="comp-note" x="122" y="52">documents chunks index raw pages</text>
+  </g>
+
+  <path class="line" d="M238 239 H332"/>
+  <text class="label" x="258" y="229">HTTP</text>
+  <path class="line" d="M476 300 H570 V359"/>
+  <text class="label" x="500" y="292">/ask</text>
+  <path class="line" d="M476 326 H570 V219"/>
+  <text class="label" x="500" y="348">/stats</text>
+  <path class="line" d="M238 415 H570 V219"/>
+  <text class="label" x="318" y="405">crawl / index / ask</text>
+  <path class="line" d="M698 219 H722"/>
+  <path class="line" d="M698 246 H781 V318"/>
+  <path class="line" d="M840 219 H942"/>
+  <text class="label" x="864" y="207">读取配置</text>
+  <path class="line" d="M840 359 H942"/>
+  <text class="label" x="864" y="347">检索</text>
+  <path class="line" d="M698 359 H942 V458"/>
+  <text class="label" x="804" y="381">向量化</text>
+  <path class="line" d="M781 400 V468"/>
+  <path class="line" d="M840 359 H890 V586 H942"/>
+  <path class="line" d="M781 400 V586 H942"/>
+  <path class="line" d="M781 260 V318"/>
+  <path class="dash" d="M698 340 C850 292 908 166 942 166"/>
+  <text class="label" x="780" y="290">可选 API Chat</text>
+</svg>

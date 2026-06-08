@@ -1,0 +1,144 @@
+classDiagram
+    class SourceConfig {
+        +str url
+        +str source_site
+        +str category
+        +bool may_require_vpn
+    }
+
+    class Document {
+        +str doc_id
+        +str title
+        +str url
+        +str source_site
+        +str category
+        +str publish_date
+        +str content
+        +str crawl_time
+        +str checksum
+        +to_dict()
+        +from_dict()
+    }
+
+    class Chunk {
+        +str chunk_id
+        +str doc_id
+        +str text
+        +str title
+        +str url
+        +str source_site
+        +str category
+        +str publish_date
+        +to_dict()
+        +from_dict()
+    }
+
+    class SearchHit {
+        +Chunk chunk
+        +float score
+    }
+
+    class Citation {
+        +str title
+        +str url
+        +str source_site
+        +str category
+        +str publish_date
+        +str snippet
+        +float score
+        +to_dict()
+    }
+
+    class Answer {
+        +str answer
+        +list citations
+        +bool has_evidence
+        +str mode
+        +to_dict()
+    }
+
+    class Settings {
+        +str openai_base_url
+        +str openai_chat_model
+        +str openai_embedding_model
+        +bool use_api_embeddings
+        +bool use_api_chat
+        +bool use_direct_api_chat
+        +str vector_store
+    }
+
+    class WebCrawler {
+        +list allowed_domains
+        +list sources
+        +dict category_keywords
+        +Settings settings
+        +crawl(max_pages, max_depth) list
+    }
+
+    class EmbeddingProvider {
+        <<interface>>
+        +embed(texts) list
+    }
+
+    class HashEmbeddingProvider {
+        +int dimensions
+        +embed(texts) list
+    }
+
+    class OpenAICompatibleEmbeddingProvider {
+        +Settings settings
+        +embed(texts) list
+    }
+
+    class LocalVectorStore {
+        +Path path
+        +list chunks
+        +list vectors
+        +build(chunks, provider)
+        +save()
+        +load()
+        +search(query, provider, top_k, category) list
+        +stats() dict
+    }
+
+    class ChromaVectorStore {
+        +Path path
+        +str collection_name
+        +build(chunks, provider)
+        +load()
+        +search(query, provider, top_k, category) list
+        +stats() dict
+    }
+
+    class OpenAICompatibleChatClient {
+        +Settings settings
+        +complete(question, hits) str
+    }
+
+    class RagService {
+        +LocalVectorStore store
+        +EmbeddingProvider provider
+        +Settings settings
+        +ask(question, top_k, category) Answer
+        +_ask_direct_api(question, top_k, category) Answer
+        +_extractive_answer(question, hits) str
+    }
+
+    SourceConfig --> WebCrawler
+    WebCrawler --> Document : creates
+    Document --> Chunk : split into
+    SearchHit --> Chunk
+    Answer o-- Citation
+    EmbeddingProvider <|.. HashEmbeddingProvider
+    EmbeddingProvider <|.. OpenAICompatibleEmbeddingProvider
+    LocalVectorStore o-- Chunk
+    ChromaVectorStore ..> Chunk
+    LocalVectorStore ..> EmbeddingProvider
+    ChromaVectorStore ..> EmbeddingProvider
+    RagService --> LocalVectorStore : search
+    RagService --> ChromaVectorStore : optional
+    RagService --> EmbeddingProvider
+    RagService --> OpenAICompatibleChatClient : optional generation
+    RagService --> Answer : returns
+    Settings --> RagService
+    Settings --> WebCrawler

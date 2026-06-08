@@ -10,6 +10,7 @@ from typing import Iterable
 from urllib.parse import urldefrag, urljoin, urlparse
 
 from .categorizer import categorize
+from .content_filter import is_navigation_index_page
 from .io import append_jsonl, ensure_parent
 from .models import Document, SourceConfig
 from .settings import FAILURES_PATH, RAW_PAGES_DIR, Settings
@@ -176,7 +177,7 @@ class WebCrawler:
             seen_urls.add(normalized)
             try:
                 title, content, links = fetch_page(normalized, self.settings)
-                if len(content) >= TEXT_MIN_LENGTH:
+                if len(content) >= TEXT_MIN_LENGTH and not is_navigation_index_page(title, content, normalized):
                     document = make_document(normalized, title, content, source, self.category_keywords)
                     if document.checksum not in seen_checksums:
                         documents.append(document)

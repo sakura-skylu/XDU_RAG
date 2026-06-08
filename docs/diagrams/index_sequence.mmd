@@ -1,0 +1,33 @@
+sequenceDiagram
+    actor Maintainer as 系统管理员/项目成员
+    participant CLI as xidian-rag CLI
+    participant Settings as settings/load_sources
+    participant Crawler as WebCrawler
+    participant Parser as HTML 解析与正文抽取
+    participant Disk as data/*.jsonl / raw pages
+    participant Chunking as chunking.make_chunks
+    participant Embed as EmbeddingProvider
+    participant Store as LocalVectorStore / ChromaVectorStore
+
+    Maintainer->>CLI: xidian-rag crawl --max-pages N
+    CLI->>Settings: load_settings(), load_sources()
+    Settings-->>CLI: 白名单、种子 URL、分类关键词
+    CLI->>Crawler: crawl(max_pages, max_depth)
+    loop 白名单内页面
+        Crawler->>Parser: fetch_page() / parse_html_page()
+        Parser-->>Crawler: title, content, links
+        Crawler->>Disk: 保存原始 HTML 快照
+        Crawler->>Crawler: 生成 Document、去重、分类
+    end
+    Crawler-->>CLI: Document 列表
+    CLI->>Disk: 写入 data/documents.jsonl
+
+    Maintainer->>CLI: xidian-rag index
+    CLI->>Disk: 读取 data/documents.jsonl
+    CLI->>Chunking: make_chunks(documents)
+    Chunking-->>CLI: Chunk 列表
+    CLI->>Disk: 写入 data/chunks.jsonl
+    CLI->>Embed: 为 Chunk 文本生成向量
+    Embed-->>CLI: vectors
+    CLI->>Store: build(chunks, provider)
+    Store->>Disk: 持久化本地索引或 Chroma 集合

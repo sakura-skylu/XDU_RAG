@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">知识库构建顺序图</title>
+  <desc id="desc">展示从网页采集、HTML 解析、文档落盘、文本切片到向量索引构建的流程</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7f9fc; }
+      .title { font: 700 30px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #122033; }
+      .subtitle { font: 400 16px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #66758a; }
+      .head { fill: #ffffff; stroke: #c9d4e2; stroke-width: 2; }
+      .head-accent { fill: #f1fbf5; stroke: #2b8a57; stroke-width: 2; }
+      .head-text { font: 600 15px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #172033; text-anchor: middle; dominant-baseline: middle; }
+      .life { stroke: #a9b8ca; stroke-width: 2; stroke-dasharray: 6 7; }
+      .msg { stroke: #334155; stroke-width: 2.1; fill: none; marker-end: url(#arrow); }
+      .ret { stroke: #64748b; stroke-width: 2; fill: none; stroke-dasharray: 7 5; marker-end: url(#arrowGray); }
+      .msg-text { font: 500 13px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #243244; }
+      .loop { fill: #fff8e9; stroke: #d19a2a; stroke-width: 1.6; stroke-dasharray: 8 5; }
+      .loop-text { font: 700 14px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #7a5514; }
+      .phase { fill: #eaf4ff; stroke: #3478c6; stroke-width: 1.5; }
+      .phase-text { font: 700 14px "Microsoft YaHei", "PingFang SC", Arial, sans-serif; fill: #1e4f86; }
+    </style>
+    <marker id="arrow" markerWidth="11" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="11" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1280" height="720"/>
+  <text class="title" x="64" y="52">知识库构建流程 - 顺序图</text>
+  <text class="subtitle" x="64" y="80">从西电官网公开页面到可检索向量索引的离线构建链路</text>
+
+  <rect class="phase" x="58" y="102" width="536" height="30" rx="15"/>
+  <text class="phase-text" x="80" y="122">阶段一：采集与结构化文档生成</text>
+  <rect class="phase" x="628" y="102" width="596" height="30" rx="15"/>
+  <text class="phase-text" x="650" y="122">阶段二：切片、向量化与索引持久化</text>
+
+  <g>
+    <rect class="head-accent" x="42" y="150" width="118" height="50" rx="12"/>
+    <text class="head-text" x="101" y="175">项目成员</text>
+    <line class="life" x1="101" y1="200" x2="101" y2="658"/>
+
+    <rect class="head" x="198" y="150" width="108" height="50" rx="12"/>
+    <text class="head-text" x="252" y="175">CLI</text>
+    <line class="life" x1="252" y1="200" x2="252" y2="658"/>
+
+    <rect class="head" x="346" y="150" width="130" height="50" rx="12"/>
+    <text class="head-text" x="411" y="175">Settings</text>
+    <line class="life" x1="411" y1="200" x2="411" y2="658"/>
+
+    <rect class="head-accent" x="516" y="150" width="126" height="50" rx="12"/>
+    <text class="head-text" x="579" y="175">WebCrawler</text>
+    <line class="life" x1="579" y1="200" x2="579" y2="658"/>
+
+    <rect class="head" x="680" y="150" width="126" height="50" rx="12"/>
+    <text class="head-text" x="743" y="175">HTML 解析</text>
+    <line class="life" x1="743" y1="200" x2="743" y2="658"/>
+
+    <rect class="head" x="844" y="150" width="118" height="50" rx="12"/>
+    <text class="head-text" x="903" y="175">data/</text>
+    <line class="life" x1="903" y1="200" x2="903" y2="658"/>
+
+    <rect class="head" x="1000" y="150" width="118" height="50" rx="12"/>
+    <text class="head-text" x="1059" y="175">Chunking</text>
+    <line class="life" x1="1059" y1="200" x2="1059" y2="658"/>
+
+    <rect class="head" x="1152" y="150" width="96" height="50" rx="12"/>
+    <text class="head-text" x="1200" y="175">向量索引</text>
+    <line class="life" x1="1200" y1="200" x2="1200" y2="658"/>
+  </g>
+
+  <path class="msg" d="M101 236 H247"/>
+  <text class="msg-text" x="118" y="228">xidian-rag crawl</text>
+  <path class="msg" d="M252 276 H406"/>
+  <text class="msg-text" x="270" y="268">load_settings(), load_sources()</text>
+  <path class="ret" d="M411 312 H257"/>
+  <text class="msg-text" x="282" y="304">白名单、种子 URL、分类词</text>
+  <path class="msg" d="M252 350 H574"/>
+  <text class="msg-text" x="310" y="342">crawl(max_pages, max_depth)</text>
+
+  <rect class="loop" x="514" y="372" width="430" height="118" rx="12"/>
+  <text class="loop-text" x="532" y="394">loop：白名单内页面</text>
+  <path class="msg" d="M579 420 H738"/>
+  <text class="msg-text" x="592" y="412">fetch_page / parse_html_page</text>
+  <path class="ret" d="M743 456 H584"/>
+  <text class="msg-text" x="602" y="448">title, content, links</text>
+  <path class="msg" d="M579 482 H898"/>
+  <text class="msg-text" x="602" y="474">保存 HTML 快照，生成 Document</text>
+
+  <path class="ret" d="M579 524 H257"/>
+  <text class="msg-text" x="338" y="516">Document 列表</text>
+  <path class="msg" d="M252 558 H898"/>
+  <text class="msg-text" x="392" y="550">写入 data/documents.jsonl</text>
+
+  <path class="msg" d="M101 590 H247"/>
+  <text class="msg-text" x="118" y="582">xidian-rag index</text>
+  <path class="msg" d="M252 620 H898"/>
+  <text class="msg-text" x="392" y="612">读取 documents.jsonl</text>
+  <path class="msg" d="M252 646 H1054"/>
+  <text class="msg-text" x="440" y="638">make_chunks(documents)，写入 chunks.jsonl，生成 embedding</text>
+  <path class="msg" d="M1059 676 H1195"/>
+  <text class="msg-text" x="1072" y="668">build() 并持久化</text>
+</svg>

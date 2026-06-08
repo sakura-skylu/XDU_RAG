@@ -1,0 +1,26 @@
+name,description_html,priority,start_date,target_date,state_group
+建立项目 Backlog 与工作流,"<p>在 Plane 中创建“西电官网数据 RAG 智能检索系统”项目，配置 Backlog、Todo、In Progress、In Review、Done 工作流，并建立需求分析、数据采集、知识库、RAG问答、后端API、前端界面、测试、UML建模、文档等标签。</p><p>验收标准：项目、状态、标签创建完成，P0 任务可被录入并分配。</p>",high,,,backlog
+编写目标用户与需求说明,"<p>梳理目标用户、核心痛点和主要使用场景，明确系统需要支持政策、保研、生活、竞赛、教务、学工等官网资料查询。</p><p>验收标准：文档中包含目标用户、核心痛点、功能性需求和非功能性需求。</p>",high,,,backlog
+绘制 UML 用例图,"<p>使用 UML 工具绘制学生、系统管理员与系统之间的交互关系，覆盖问答查询、分类筛选、查看引用、更新知识库等用例。</p><p>验收标准：用例图可放入最终课程文档。</p>",high,,,backlog
+配置官网白名单数据源,"<p>维护西电主站、综合信息网、信息公开网、教务处、研究生院、学生工作部、校内通知平台等官方来源配置。</p><p>验收标准：config/sources.json 中包含允许域名、种子 URL 和分类关键词。</p>",high,,,backlog
+实现网页抓取与原文保存,"<p>按官方白名单抓取公开网页，保存原始 HTML 快照，并记录无法访问页面的失败原因。</p><p>验收标准：可运行 xidian-rag crawl --max-pages 120，原始页面写入 data/knowledge_base/pages/。</p>",high,,,backlog
+实现 HTML 正文抽取与文档生成,"<p>从网页 HTML 中抽取标题、正文、来源站点、分类、发布时间等结构化信息，并过滤短文本和重复文本。</p><p>验收标准：生成 data/documents.jsonl，文档字段完整。</p>",high,,,backlog
+支持本地 HTML 原文导入,"<p>支持将手动保存的 HTML 页面放入 data/knowledge_base/pages/ 后离线生成结构化文档。</p><p>验收标准：xidian-rag ingest-pages 可从本地 HTML 生成 documents.jsonl。</p>",medium,,,backlog
+实现文本切片与索引构建,"<p>将结构化文档切分为适合检索的文本块，并生成 chunks.jsonl 与本地索引。</p><p>验收标准：可运行 xidian-rag index，生成 data/chunks.jsonl 和 data/index/。</p>",high,,,backlog
+实现本地向量检索,"<p>在无 API Key 的情况下使用本地哈希向量完成基础语义检索。</p><p>验收标准：默认 VECTOR_STORE=local 时可构建索引并搜索相关片段。</p>",high,,,backlog
+支持分类过滤检索,"<p>问答时支持按政策、保研、生活、竞赛、教务、学工等分类过滤检索结果。</p><p>验收标准：/ask 接口支持 category 参数，前端可选择分类。</p>",high,,,backlog
+实现 RAG 问答与拒答机制,"<p>基于检索命中的官方资料生成答案；当知识库为空或命中分数过低时明确拒答。</p><p>验收标准：有依据时返回答案和引用；无依据时返回“未在已收录官方资料中找到依据”。</p>",high,,,backlog
+接入 OpenAI-compatible Chat,"<p>配置 API Key 后使用 OpenAI-compatible chat 接口基于检索上下文生成更自然的答案。</p><p>验收标准：USE_API_CHAT=true 且配置 API Key 时可生成回答，失败时回退到抽取式回答。</p>",medium,,,backlog
+接入 OpenAI-compatible Embedding,"<p>配置 API Key 后使用外部 embedding 模型提升语义检索质量。</p><p>验收标准：USE_API_EMBEDDINGS=true 时可调用配置的 embedding 接口。</p>",medium,,,backlog
+支持 Chroma 向量库,"<p>提供 Chroma 作为可选持久化向量数据库，便于后续扩展。</p><p>验收标准：安装 chroma 可选依赖并设置 VECTOR_STORE=chroma 后可构建和查询。</p>",medium,,,backlog
+实现健康检查接口,"<p>提供服务运行状态检查接口。</p><p>验收标准：GET /health 返回 status=ok。</p>",high,,,backlog
+实现数据源接口,"<p>返回当前允许域名、种子站点和分类信息。</p><p>验收标准：GET /sources 返回配置数据。</p>",high,,,backlog
+实现统计接口,"<p>返回知识库切片数量和分类分布，便于查看索引状态。</p><p>验收标准：GET /stats 可查看 chunks 总数和分类数量。</p>",medium,,,backlog
+实现问答接口,"<p>提供学生自然语言问答 API，支持 question、category 和 top_k 参数。</p><p>验收标准：POST /ask 可返回 answer、citations、has_evidence 和 mode。</p>",high,,,backlog
+实现 Streamlit 问答页面,"<p>提供学生可直接使用的问答界面，支持输入问题、选择分类、设置 Top K、展示答案和引用。</p><p>验收标准：streamlit run app/streamlit_app.py 后可完成完整问答演示。</p>",high,,,backlog
+增加前端错误提示,"<p>当后端未启动、知识库为空或 API 异常时，在页面中给出清晰提示。</p><p>验收标准：用户能理解失败原因和下一步操作。</p>",medium,,,backlog
+编写核心单元测试,"<p>覆盖分类、切片、原文保存、导入、空库拒答、检索命中等核心逻辑。</p><p>验收标准：python -m unittest 通过。</p>",high,,,backlog
+设计系统测试用例,"<p>设计正常问答、分类筛选、空库拒答、API 失败兜底等系统测试用例。</p><p>验收标准：形成可放入最终文档的测试用例表。</p>",high,,,backlog
+准备系统演示数据与问题,"<p>选择若干官网页面并准备典型演示问题，例如保研政策、竞赛通知、奖助学金、考试安排等。</p><p>验收标准：演示时可稳定展示查询结果和官方引用。</p>",high,,,backlog
+绘制 UML 类图或组件图,"<p>展示爬虫、分类、切片、Embedding、向量存储、RAG 服务、API、前端之间的关系。</p><p>验收标准：类图或组件图可放入最终课程文档。</p>",medium,,,backlog
+整理 Word 文档并导出 PDF,"<p>汇总项目规划、需求分析、UML 图、技术方案、迭代计划、测试说明和系统截图。</p><p>验收标准：导出 PDF，按“学号.pdf”命名，并通过学在西电提交。</p>",high,,,backlog

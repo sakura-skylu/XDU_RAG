@@ -1,0 +1,4 @@
+
+s = "111"
+num = s.__len__()
+print(num)

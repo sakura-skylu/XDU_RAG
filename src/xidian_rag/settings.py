@@ -39,14 +39,25 @@ def env_bool(name: str, default: bool) -> bool:
     return value.lower() in {"1", "true", "yes", "on"}
 
 
+def env_int(name: str) -> int | None:
+    value = os.getenv(name)
+    if not value:
+        return None
+    return int(value)
+
+
 @dataclass(slots=True)
 class Settings:
     openai_api_key: str | None
     openai_base_url: str
     openai_chat_model: str
     openai_embedding_model: str
+    openai_embedding_api_key: str | None
+    openai_embedding_base_url: str
+    openai_embedding_dimensions: int | None
     use_api_embeddings: bool
     use_api_chat: bool
+    use_direct_api_chat: bool
     vector_store: str
     request_timeout_seconds: float
     crawl_delay_seconds: float
@@ -54,13 +65,24 @@ class Settings:
 
 def load_settings() -> Settings:
     _load_dotenv()
+    openai_api_key = os.getenv("OPENAI_API_KEY") or None
+    openai_base_url = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+    embedding_base_url = os.getenv("OPENAI_EMBEDDING_BASE_URL", openai_base_url).rstrip("/")
+    embedding_api_key = os.getenv("OPENAI_EMBEDDING_API_KEY") or os.getenv("ZHIPU_API_KEY") or None
+    if embedding_api_key is None and embedding_base_url == openai_base_url:
+        embedding_api_key = openai_api_key
+
     return Settings(
-        openai_api_key=os.getenv("OPENAI_API_KEY") or None,
-        openai_base_url=os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/"),
+        openai_api_key=openai_api_key,
+        openai_base_url=openai_base_url,
         openai_chat_model=os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini"),
         openai_embedding_model=os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
+        openai_embedding_api_key=embedding_api_key,
+        openai_embedding_base_url=embedding_base_url,
+        openai_embedding_dimensions=env_int("OPENAI_EMBEDDING_DIMENSIONS"),
         use_api_embeddings=env_bool("USE_API_EMBEDDINGS", False),
         use_api_chat=env_bool("USE_API_CHAT", False),
+        use_direct_api_chat=env_bool("USE_DIRECT_API_CHAT", False),
         vector_store=os.getenv("VECTOR_STORE", "local").lower(),
         request_timeout_seconds=float(os.getenv("REQUEST_TIMEOUT_SECONDS", "12")),
         crawl_delay_seconds=float(os.getenv("CRAWL_DELAY_SECONDS", "0.6")),
